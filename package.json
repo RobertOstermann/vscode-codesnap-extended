@@ -1,0 +1,75 @@
+{
+  "name": "vscode-codesnap-extended",
+  "displayName": "CodeSnap Extended",
+  "description": "📸 Take beautiful screenshots of your code.",
+  "publisher": "RobertOstermann",
+  "icon": "images/icon.png",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/RobertOstermann/vscode-codesnap-extended",
+  "bugs": {
+    "url": "https://github.com/RobertOstermann/vscode-codesnap-extended/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobertOstermann/vscode-codesnap-extended"
+  },
+  "main": "./out/src/extension.js",
+  "engines": {
+    "vscode": "^1.65.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "codesnap",
+    "screenshot",
+    "snap"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": [
+      {
+        "title": "CodeSnap",
+        "properties": {
+          "codesnap.enabled": {
+            "type": "boolean",
+            "markdownDescription": "Enable CodeSnap",
+            "default": true
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "rimraf out && tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "node ./node_modules/vscode/bin/test",
+    "vscode:prepublish": "npm run -S esbuild-base -- --minify",
+    "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/src/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run -S esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run -S esbuild-base -- --sourcemap --watch",
+    "download-api": "vscode-dts dev",
+    "postdownload-api": "vscode-dts main"
+  },
+  "dependencies": {
+    "dom-to-image-even-more": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "esbuild": "^0.14.24",
+    "eslint": "^8.10.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "glob": "^7.2.0",
+    "mocha": "^9.2.1",
+    "typescript": "^4.6.2",
+    "vscode-test": "^1.2.2"
+  }
+}
