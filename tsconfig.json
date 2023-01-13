@@ -8,5 +8,5 @@
     "rootDir": ".",
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", ".vscode-test", "examples"]
+  "exclude": ["node_modules", ".vscode-test", "examples", "webview"]
 }

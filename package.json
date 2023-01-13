@@ -27,9 +27,28 @@
     "snap"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onCommand:codesnap.start",
+    "onView:codeSnap.snapView"
   ],
   "contributes": {
+    "views": {
+      "codesnap": [
+        {
+          "id": "codesnap.snapView",
+          "name": "CodeSnap",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codesnap",
+          "icon": "./images/logo/icon.png",
+          "title": "CodeSnap"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "codesnap.start",

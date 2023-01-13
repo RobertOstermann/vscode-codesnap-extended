@@ -24,9 +24,6 @@ export default class Configuration {
     });
   }
 
-  /**
-   * @returns The variables for a terminal
-   */
   static variables(): Variables {
     const workspaceFolder = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.fsPath : undefined;
     const rootPath = workspaceFolder ? Utilities.normalizePath(workspaceFolder) : undefined;

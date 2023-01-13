@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CodeSnap from "./CodeSnap";
+import CodeSnap from "./codeSnap";
 
 ReactDOM.render(
   <React.StrictMode>

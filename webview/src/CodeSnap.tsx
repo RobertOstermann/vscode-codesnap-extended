@@ -1,19 +1,24 @@
 import { vscode } from "./utilities/vscode";
-import { VSCodeButton } from "@vscode/webview-ui-toolkit/react";
-import "./CodeSnap.css";
+import * as toolkit from "@vscode/webview-ui-toolkit/react";
+import "./codeSnap.css";
+import { useState } from "react";
 
 export default function CodeSnap() {
+  const [lineNumbers, setLineNumbers] = useState(false);
+
   function handleHowdyClick() {
-    vscode.postMessage({
-      command: "hello",
-      text: "Hey there partner! 🤠",
-    });
+    setLineNumbers(!lineNumbers);
+    // vscode.postMessage({
+    //   command: "hello",
+    //   text: "Hey there buddy! 🤠",
+    // });
   }
 
   return (
-    <main>
-      <h1>Hello World!</h1>
-      <VSCodeButton onClick={handleHowdyClick}>Howdy!</VSCodeButton>
-    </main>
+    <div>
+      <toolkit.VSCodeButton appearance={"primary"} onClick={handleHowdyClick}>
+        <toolkit.VSCodeCheckbox checked={lineNumbers}>Line Numbers</toolkit.VSCodeCheckbox>
+      </toolkit.VSCodeButton>
+    </div>
   );
-}
+} 
