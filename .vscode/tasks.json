@@ -11,7 +11,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm",
+      "label": "npm watch",
       "type": "npm",
       "script": "watch",
       "problemMatcher": "$tsc-watch",
@@ -22,6 +22,28 @@
       "group": {
         "kind": "build",
         "isDefault": true
+      }
+    },
+    {
+      "label": "npm watch: webview",
+      "type": "shell",
+      "command": "npm start",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "options": {
+        "cwd": "C:/Users/RobertOstermann/source/repos/extensions/vscode-codesnap-extended/webview"
       }
     }
   ]
