@@ -1,24 +1,63 @@
-import { vscode } from "./utilities/vscode";
-import * as toolkit from "@vscode/webview-ui-toolkit/react";
 import "./codeSnap.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Snippet from "./snippet";
+import logo from './images/icon.png';
+import Button from "@mui/material/Button";
+import { CheckBoxRounded, CheckBoxOutlineBlankRounded } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 export default function CodeSnap() {
+  const [data, setData] = useState<any>(false);
   const [lineNumbers, setLineNumbers] = useState(false);
 
-  function handleHowdyClick() {
-    setLineNumbers(!lineNumbers);
-    // vscode.postMessage({
-    //   command: "hello",
-    //   text: "Hey there buddy! 🤠",
-    // });
-  }
+  const onMessage = (event: any) => {
+    console.log(event?.data);
+    setData(true);
+  };
+
+  useEffect(() => {
+    window.addEventListener('message', onMessage);
+
+    return () => {
+      window.removeEventListener('message', onMessage);
+    };
+  }, []);
+
+  // function postMessage() {
+  //   vscode.postMessage({
+  //     command: "hello",
+  //     text: "Hey there partner! 🤠",
+  //   });
+  // }
 
   return (
-    <div>
-      <toolkit.VSCodeButton appearance={"primary"} onClick={handleHowdyClick}>
-        <toolkit.VSCodeCheckbox checked={lineNumbers}>Line Numbers</toolkit.VSCodeCheckbox>
-      </toolkit.VSCodeButton>
-    </div>
+    <main>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={3}
+        className="stack"
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setLineNumbers(!lineNumbers)}
+          startIcon={data ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        >
+          Line Numbers
+        </Button>
+        <img src={logo} alt="snap" className="shutter" />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setLineNumbers(!lineNumbers)}
+          startIcon={lineNumbers ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        >
+          Line Numbers
+        </Button>
+      </Stack>
+      <Snippet />
+    </main >
   );
-} 
+}

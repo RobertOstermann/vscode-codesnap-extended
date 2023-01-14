@@ -4,8 +4,22 @@ main {
   justify-content: center;
   align-items: flex-start;
   height: 100%;
+  width: 100%;
 }
 
-main > * {
-  margin: 1rem 0;
+div {
+  padding: 1rem;
+}
+
+.shutter {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.stack {
+  width: 100%;
+  min-width: 500px;
 }

@@ -3,6 +3,14 @@ import { Disposable, ExtensionContext, ExtensionMode, Webview, window } from "vs
 import Utilities from "../helpers/utilities";
 
 export default class CodeSnap {
+  public static sendSettings(webview: Webview) {
+    webview.postMessage("true");
+  }
+
+  public static sendMessage(webview: Webview, message: any) {
+    webview.postMessage(message);
+  }
+
   public static setupHtml(webview: Webview, context: ExtensionContext) {
     const nonce = Utilities.getNonce();
     const contentSecurityPolicy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">`;
@@ -53,6 +61,7 @@ export default class CodeSnap {
           case "hello":
             // Code that should run in response to the hello message command
             window.showInformationMessage(text);
+            CodeSnap.sendMessage(webview, "hello");
             return;
           // Add more switch case statements here as more webview message commands
           // are created within the webview context (i.e. inside media/main.js)
