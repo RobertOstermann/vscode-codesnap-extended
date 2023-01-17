@@ -1,5 +1,6 @@
-import { Disposable, ExtensionContext, ExtensionMode, Webview, window } from "vscode";
+import { commands, Disposable, ExtensionContext, ExtensionMode, Webview, window } from "vscode";
 
+import Configuration from "../helpers/configuration";
 import Utilities from "../helpers/utilities";
 
 export default class CodeSnap {
@@ -51,20 +52,33 @@ export default class CodeSnap {
     `;
   }
 
-  public static setupWebviewHooks(webview: Webview, disposables: Disposable[]) {
+  public static async setupWebviewHooks(webview: Webview, disposables: Disposable[]) {
+    const sendConfigurationSettings = () => {
+      const message = { type: "update", ...Configuration.getConfigurationSettings() };
+      CodeSnap.sendMessage(webview, message);
+    };
+
+    const sendFlash = () => {
+      const message = { type: "flash" };
+      CodeSnap.sendMessage(webview, message);
+    };
+
     webview.onDidReceiveMessage(
-      (message: any) => {
+      async (message: any) => {
         const command = message.command;
         const text = message.text;
 
         switch (command) {
           case "hello":
-            // Code that should run in response to the hello message command
             window.showInformationMessage(text);
             CodeSnap.sendMessage(webview, "hello");
-            return;
-          // Add more switch case statements here as more webview message commands
-          // are created within the webview context (i.e. inside media/main.js)
+            break;
+          case "getSettings":
+            await commands.executeCommand("editor.action.clipboardCopyWithSyntaxHighlightingAction");
+            sendConfigurationSettings();
+            break;
+          case "save":
+            sendFlash();
         }
       },
       undefined,

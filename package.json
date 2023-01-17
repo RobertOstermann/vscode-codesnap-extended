@@ -27,7 +27,6 @@
     "snap"
   ],
   "activationEvents": [
-    "onCommand:codesnap.start",
     "onView:codeSnap.snapView"
   ],
   "contributes": {
@@ -70,6 +69,117 @@
             "type": "boolean",
             "markdownDescription": "Enable CodeSnap",
             "default": true
+          },
+          "codesnap.backgroundPalette": {
+            "scope": "resource",
+            "type": "string",
+            "enum": [
+              "custom",
+              "magnum",
+              "pinky",
+              "passion",
+              "steel",
+              "tropic",
+              "forest",
+              "blueman",
+              "sand"
+            ],
+            "default": "magnum",
+            "markdownDescription": "The palette background of the container"
+          },
+          "codesnap.boxShadow": {
+            "scope": "resource",
+            "type": "string",
+            "default": "rgba(0, 0, 0, 0.55) 0px 20px 68px",
+            "description": "The CSS box-shadow for the snippet"
+          },
+          "codesnap.containerBackground": {
+            "scope": "resource",
+            "type": "string",
+            "default": "rgba(0, 0, 0, 0.75)",
+            "description": "The background of the snippet's container when the palette is custom"
+          },
+          "codesnap.containerPadding": {
+            "scope": "resource",
+            "type": "string",
+            "default": "3em",
+            "description": "The padding for the snippet's container"
+          },
+          "codesnap.realLineNumbers": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": false,
+            "description": "Start from the selection's line number instead of 1"
+          },
+          "codesnap.showLineNumbers": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": true,
+            "description": "Display line numbers"
+          },
+          "codesnap.showWindowTitle": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": false,
+            "description": "Display window title with open folder / file name"
+          },
+          "codesnap.target": {
+            "scope": "resource",
+            "type": "string",
+            "enum": [
+              "container",
+              "window"
+            ],
+            "default": "container",
+            "description": "Take the shot with or without the container"
+          },
+          "codesnap.transparentBackground": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": false,
+            "description": "Use a transparent background when taking the screenshot"
+          },
+          "codesnap.trimEmptyLines": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": true,
+            "description": "Trim off empty lines at the beginning and at the end"
+          },
+          "codesnap.windowBorderRadius": {
+            "scope": "resource",
+            "type": "string",
+            "default": "10px",
+            "description": "Rounded corners for the window"
+          },
+          "codesnap.windowControlStyle": {
+            "scope": "resource",
+            "type": "string",
+            "enum": [
+              "Windows",
+              "OS X",
+              "Gray dots",
+              "None"
+            ],
+            "default": "Windows",
+            "description": "Display window controls"
+          },
+          "codesnap.windowTitleCustomStyle": {
+            "scope": "resource",
+            "type": "string",
+            "default": "CodeSnap",
+            "description": "The window title text when style is custom"
+          },
+          "codesnap.windowTitleStyle": {
+            "scope": "resource",
+            "type": "string",
+            "enum": [
+              "Workspace + Filename",
+              "Filename",
+              "Custom",
+              "None"
+            ],
+            "default": "Workspace + Filename",
+            "description": "Window title style"
           }
         }
       }
