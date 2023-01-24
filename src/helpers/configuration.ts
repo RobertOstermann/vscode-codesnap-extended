@@ -99,6 +99,12 @@ export default class Configuration {
       .get<boolean>("showWindowTitle", false);
   }
 
+  public static shutterAction(): string {
+    return vscode.workspace
+      .getConfiguration("codesnap")
+      .get<string>("shutterAction", "copy");
+  }
+
   public static target(): string {
     return vscode.workspace
       .getConfiguration("codesnap")
@@ -209,6 +215,7 @@ export default class Configuration {
       "realLineNumbers": Configuration.realLineNumbers(),
       "showLineNumbers": Configuration.showLineNumbers(),
       "showWindowTitle": Configuration.showWindowTitle(),
+      "shutterAction": Configuration.shutterAction(),
       "target": Configuration.target(),
       "transparentBackground": Configuration.transparentBackground(),
       "trimEmptyLines": Configuration.trimEmptyLines(),

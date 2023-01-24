@@ -8,6 +8,7 @@ import { Stack } from "@mui/material";
 import ConfigurationSettings from "./types/configurationSettings";
 import { setVar } from "./utilities/utilities";
 import { vscode } from "./utilities/vscode";
+import { cameraFlashAnimation, takeSnap } from "./utilities/snap";
 
 export default function CodeSnap() {
   const [data, setData] = useState<any>(false);
@@ -48,12 +49,13 @@ export default function CodeSnap() {
 
   const onMessage = (event: any) => {
     const data: ConfigurationSettings = event?.data;
-    console.log(data.type);
     switch (data.type) {
       case "update":
         updateConfigurationSettings(data);
         break;
-
+      case "flash":
+        cameraFlashAnimation();
+        break;
       default:
         break;
     }
@@ -61,7 +63,6 @@ export default function CodeSnap() {
   };
 
   useEffect(() => {
-    console.log("message");
     window.addEventListener('message', onMessage);
 
     // vscode.postMessage({
@@ -74,12 +75,16 @@ export default function CodeSnap() {
     };
   });
 
-  function postMessage() {
+  const shutterAction = () => {
+    takeSnap(config);
+  };
+
+  const postMessage = () => {
     vscode.postMessage({
       type: "getSettings",
-      data: "Hey there partner! 🤠",
+      data: "Retrieving Settings",
     });
-  }
+  };
 
   return (
     <main>
@@ -98,11 +103,11 @@ export default function CodeSnap() {
         >
           Line Numbers
         </Button>
-        <img src={logo} alt="snap" className="shutter" />
+        <img src={logo} alt="snap" className="shutter" onClick={shutterAction} />
         <Button
           variant="contained"
           color="primary"
-          onClick={() => postMessage()}
+          onClick={postMessage}
           startIcon={lineNumbers ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
         >
           Line Numbers

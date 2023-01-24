@@ -12,6 +12,7 @@ type ConfigurationSettings = {
   realLineNumbers?: boolean;
   showLineNumbers?: boolean;
   showWindowTitle?: boolean;
+  shutterAction?: string;
   target?: string;
   transparentBackground?: boolean;
   trimEmptyLines?: boolean;

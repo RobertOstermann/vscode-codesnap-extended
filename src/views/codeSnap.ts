@@ -4,7 +4,7 @@ import path = require("path");
 import { commands, Disposable, ExtensionContext, ExtensionMode, Uri, Webview, window } from "vscode";
 
 import Configuration from "../helpers/configuration";
-import Utilities from "../helpers/utilities";
+import Utilities, { DEBOUNCE_TIME } from "../helpers/utilities";
 
 export default class CodeSnap {
   public static sendSettings(webview: Webview) {
@@ -64,6 +64,13 @@ export default class CodeSnap {
       CodeSnap.sendMessage(webview, message);
     };
 
+    const sendConfigurationSettingsDebounced = Utilities.debounce(async () => {
+      await commands.executeCommand("editor.action.clipboardCopyWithSyntaxHighlightingAction");
+      const message = { type: "update", ...Configuration.getConfigurationSettings() };
+      CodeSnap.sendMessage(webview, message);
+    }, DEBOUNCE_TIME);
+
+
     const sendFlash = () => {
       const message = { type: "flash" };
       CodeSnap.sendMessage(webview, message);
@@ -90,7 +97,9 @@ export default class CodeSnap {
 
     window.onDidChangeTextEditorSelection(
       (event) => {
-        if (hasOneSelection(event.selections)) sendConfigurationSettings();
+        if (hasOneSelection(event.selections)) {
+          sendConfigurationSettingsDebounced();
+        }
       },
       null,
       disposables
@@ -107,8 +116,8 @@ export default class CodeSnap {
             sendConfigurationSettings();
             break;
           case "save":
-            await saveImage(data);
             sendFlash();
+            await saveImage(data);
             break;
           default:
             window.showInformationMessage(text);

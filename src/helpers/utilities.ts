@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 
 import Variables from "./types/variables";
 
+export const DEBOUNCE_TIME = 500;
+
 export default class Utilities {
   public static interpolateString(command: string, variables: Variables): string {
     const regex = /\$\{([^\}]+)\}/g; // eslint-disable-line no-useless-escape
@@ -31,6 +33,15 @@ export default class Utilities {
     }
 
     return path.replace(/\\+/g, "/");
+  }
+
+  public static debounce(fn: (...args: any[]) => void, ms: number) {
+    let timeout: NodeJS.Timeout;
+
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), ms);
+    };
   }
 
   public static getUri(webview: vscode.Webview, extensionUri: vscode.Uri, pathList: string[]) {

@@ -121,7 +121,17 @@
             "scope": "resource",
             "type": "boolean",
             "default": false,
-            "description": "Display window title with open folder / file name"
+            "description": "Display window title with open folder/file name"
+          },
+          "codesnap.shutterAction": {
+            "scope": "resource",
+            "type": "string",
+            "enum": [
+              "save",
+              "copy"
+            ],
+            "default": "copy",
+            "description": "The behavior of the shutter button"
           },
           "codesnap.target": {
             "scope": "resource",
@@ -130,7 +140,7 @@
               "container",
               "window"
             ],
-            "default": "container",
+            "default": "window",
             "description": "Take the shot with or without the container"
           },
           "codesnap.transparentBackground": {
@@ -166,8 +176,8 @@
           "codesnap.windowTitle": {
             "scope": "resource",
             "type": "string",
-            "default": "${workspaceFolderBasename} - ${relativeFile}",
-            "description": "The window title text when style is custom"
+            "default": "${workspaceFolderBasename} - ${fileBasename}",
+            "description": "The window title."
           }
         }
       }
