@@ -163,23 +163,11 @@
             "default": "Windows",
             "description": "Display window controls"
           },
-          "codesnap.windowTitleCustomStyle": {
+          "codesnap.windowTitle": {
             "scope": "resource",
             "type": "string",
-            "default": "CodeSnap",
+            "default": "${workspaceFolderBasename} - ${relativeFile}",
             "description": "The window title text when style is custom"
-          },
-          "codesnap.windowTitleStyle": {
-            "scope": "resource",
-            "type": "string",
-            "enum": [
-              "Workspace + Filename",
-              "Filename",
-              "Custom",
-              "None"
-            ],
-            "default": "Workspace + Filename",
-            "description": "Window title style"
           }
         }
       }

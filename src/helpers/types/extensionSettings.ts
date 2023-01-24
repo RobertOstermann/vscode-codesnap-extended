@@ -11,8 +11,7 @@ type ExtensionSettings = {
   trimEmptyLines?: boolean;
   windowBorderRadius?: string;
   windowControlStyle?: string;
-  windowTitleCustomStyle?: string;
-  windowTitleStyle?: string;
+  windowTitle?: string;
 };
 
 export default ExtensionSettings;

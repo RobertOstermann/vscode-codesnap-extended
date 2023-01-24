@@ -15,6 +15,7 @@ export class CodeSnapView implements WebviewViewProvider {
   public static readonly viewType = "codesnap.snapView";
 
   private _disposables: Disposable[] = [];
+  private _webviewDisposables: Disposable[] = [];
 
   constructor(
     private readonly _extensionContext: ExtensionContext,
@@ -31,15 +32,38 @@ export class CodeSnapView implements WebviewViewProvider {
     };
 
     webviewView.webview.html = CodeSnap.setupHtml(webviewView.webview, this._extensionContext);
-    webviewView.onDidDispose(() => this.dispose(), null, this._disposables);
-    CodeSnap.setupWebviewHooks(webviewView.webview, []);
+    webviewView.onDidChangeVisibility(
+      () => this.dispose(webviewView, false),
+      null,
+      this._webviewDisposables
+    );
+    webviewView.onDidDispose(
+      () => this.dispose(webviewView),
+      null,
+      this._webviewDisposables
+    );
+    CodeSnap.setupWebviewHooks(webviewView.webview, this._disposables);
   }
 
-  public dispose() {
+  public dispose(webviewView: WebviewView, disposeAll = true) {
+    if (webviewView.visible) {
+      CodeSnap.setupWebviewHooks(webviewView.webview, this._disposables);
+      return;
+    }
+
     while (this._disposables.length) {
       const disposable = this._disposables.pop();
       if (disposable) {
         disposable.dispose();
+      }
+    }
+
+    if (disposeAll) {
+      while (this._webviewDisposables.length) {
+        const disposable = this._webviewDisposables.pop();
+        if (disposable) {
+          disposable.dispose();
+        }
       }
     }
   }

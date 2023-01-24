@@ -9,21 +9,21 @@ import Utilities from "./utilities";
 export default class Configuration {
   /** Initialize the configuration options that require a reload upon change. */
   public static initialize(): void {
-    vscode.workspace.onDidChangeConfiguration((event) => {
-      if (event.affectsConfiguration("codesnap")) {
-        const action = "Reload";
-        vscode.window
-          .showInformationMessage(
-            "Reload window for configuration change to take effect.",
-            action
-          )
-          .then(selectedAction => {
-            if (selectedAction === action) {
-              vscode.commands.executeCommand("workbench.action.reloadWindow");
-            }
-          });
-      }
-    });
+    // vscode.workspace.onDidChangeConfiguration((event) => {
+    //   if (event.affectsConfiguration("codesnap")) {
+    //     const action = "Reload";
+    //     vscode.window
+    //       .showInformationMessage(
+    //         "Reload window for configuration change to take effect.",
+    //         action
+    //       )
+    //       .then(selectedAction => {
+    //         if (selectedAction === action) {
+    //           vscode.commands.executeCommand("workbench.action.reloadWindow");
+    //         }
+    //       });
+    //   }
+    // });
   }
 
   /** Extension Settings  */
@@ -129,20 +129,14 @@ export default class Configuration {
       .get<string>("windowControlStyle", "Windows");
   }
 
-  public static windowTitleCustomStyle(): string {
-    return vscode.workspace
+  public static windowTitle(): string {
+    let title = vscode.workspace
       .getConfiguration("codesnap")
-      .get<string>("windowTitleCustomStyle", "CodeSnap");
-  }
+      .get<string>("windowTitle", "${workspaceFolderBasename} - ${relativeFile}");
 
-  public static windowTitleStyle(): string {
-    let windowTitleStyle = vscode.workspace
-      .getConfiguration("codesnap")
-      .get<string>("windowTitleStyle", "Workspace + Filename");
+    title = Utilities.interpolateString(title, Configuration.variables());
 
-    windowTitleStyle = Utilities.interpolateString(windowTitleStyle, Configuration.variables());
-
-    return windowTitleStyle;
+    return title;
   }
 
   /** Editor Settings */
@@ -187,19 +181,7 @@ export default class Configuration {
 
     let windowTitle = "";
     if (editor && Configuration.getExtensionSettings().showWindowTitle) {
-      {
-        if (Configuration.getExtensionSettings().windowTitleStyle === "Workspace + Filename") {
-          const activeFileName = editor.document.uri.path.split("/").pop();
-          windowTitle = `${vscode.workspace.name} - ${activeFileName}`;
-        }
-        if (Configuration.getExtensionSettings().windowTitleStyle === "Filename") {
-          const activeFileName = editor.document.uri.path.split("/").pop();
-          windowTitle = `${activeFileName}`;
-        }
-        if (Configuration.getExtensionSettings().windowTitleStyle === "Custom") {
-          windowTitle = Configuration.getExtensionSettings().windowTitleCustomStyle;
-        }
-      }
+      windowTitle = Configuration.getExtensionSettings().windowTitle;
     }
 
     return {
@@ -232,8 +214,7 @@ export default class Configuration {
       "trimEmptyLines": Configuration.trimEmptyLines(),
       "windowBorderRadius": Configuration.windowBorderRadius(),
       "windowControlStyle": Configuration.windowControlStyle(),
-      "windowTitleCustomStyle": Configuration.windowTitleCustomStyle(),
-      "windowTitleStyle": Configuration.windowTitleStyle(),
+      "windowTitle": Configuration.windowTitle(),
     };
   }
 

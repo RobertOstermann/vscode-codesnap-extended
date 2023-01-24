@@ -28,7 +28,7 @@ export class CodeSnapPanel {
       const panel = window.createWebviewPanel(
         "showCodeSnap",
         "CodeSnap",
-        ViewColumn.One,
+        ViewColumn.Beside,
         {
           enableScripts: true,
           // retainContextWhenHidden: true

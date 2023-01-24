@@ -4,7 +4,6 @@ type ConfigurationSettings = {
   letterSpacing?: string | number;
   startLine?: number;
   tabSize?: string | number;
-  windowTitle?: string;
   // Extension Settings
   backgroundPalette?: string;
   boxShadow?: string;
@@ -18,8 +17,7 @@ type ConfigurationSettings = {
   trimEmptyLines?: boolean;
   windowBorderRadius?: string;
   windowControlStyle?: string;
-  windowTitleCustomStyle?: string;
-  windowTitleStyle?: string;
+  windowTitle?: string;
   // Type
   type?: string;
 };

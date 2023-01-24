@@ -123,11 +123,20 @@ export const pasteCode = (configuration: ConfigurationSettings, clipboard: any) 
   setupLines(snippetNode, configuration);
 };
 
-export default function Snippet(configuration: ConfigurationSettings) {
+type SnippetProps = {
+  configuration: ConfigurationSettings;
+};
+
+export default function Snippet({ configuration }: SnippetProps) {
   const hideNavbar = configuration.windowControlStyle !== "None" && !configuration.showWindowTitle;
   const hideWindowControls = configuration.windowControlStyle !== "Windows";
   const hideMacControls = configuration.windowControlStyle !== "OS X" && configuration.windowControlStyle !== "Gray dots";
   const hideWindowTitle = !configuration.showWindowTitle;
+  console.log(JSON.stringify(configuration));
+  console.log(`hideNavbar = ${hideNavbar} - ${configuration.windowControlStyle !== "None"} && ${!configuration.showWindowTitle}`);
+  console.log(`hideWindowControls = ${hideWindowControls} - ${configuration.windowControlStyle !== "Windows"}`);
+  console.log(`hideMacControls = ${hideMacControls} - ${configuration.windowControlStyle !== "OS X"} && ${configuration.windowControlStyle !== "Gray dots"}`);
+  console.log(`hideWindowTitle = ${hideWindowTitle} - ${!configuration.showWindowTitle}`);
 
   return (
     <div id="snippet-scroll">

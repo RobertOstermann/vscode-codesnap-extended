@@ -58,7 +58,8 @@ export default class CodeSnap {
   public static async setupWebviewHooks(webview: Webview, disposables: Disposable[]) {
     const editor = window.activeTextEditor;
 
-    const sendConfigurationSettings = () => {
+    const sendConfigurationSettings = async () => {
+      await commands.executeCommand("editor.action.clipboardCopyWithSyntaxHighlightingAction");
       const message = { type: "update", ...Configuration.getConfigurationSettings() };
       CodeSnap.sendMessage(webview, message);
     };
@@ -83,12 +84,17 @@ export default class CodeSnap {
 
     const hasOneSelection = (selections: any) => selections && selections.length === 1 && !selections[0].isEmpty;
 
-    const selectionHandler = window.onDidChangeTextEditorSelection((event) => {
-      if (hasOneSelection(event.selections)) sendConfigurationSettings();
-    });
-    disposables.push(selectionHandler);
+    if (editor && hasOneSelection(editor.selections)) {
+      sendConfigurationSettings();
+    }
 
-    if (editor && hasOneSelection(editor.selections)) sendConfigurationSettings();
+    window.onDidChangeTextEditorSelection(
+      (event) => {
+        if (hasOneSelection(event.selections)) sendConfigurationSettings();
+      },
+      null,
+      disposables
+    );
 
     webview.onDidReceiveMessage(
       async ({ type, data }: any) => {

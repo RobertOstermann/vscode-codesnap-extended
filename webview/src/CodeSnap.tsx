@@ -1,4 +1,4 @@
-import "./codeSnap.css";
+import "./style.css";
 import { useEffect, useState } from "react";
 import Snippet, { pasteCode } from "./components/snippet";
 import logo from './images/icon.png';
@@ -11,10 +11,11 @@ import { vscode } from "./utilities/vscode";
 
 export default function CodeSnap() {
   const [data, setData] = useState<any>(false);
+  const [config, setConfig] = useState<ConfigurationSettings>({});
   const [lineNumbers, setLineNumbers] = useState(false);
 
   const updateConfigurationSettings = (configuration: ConfigurationSettings) => {
-    console.log("update");
+    setConfig(configuration);
     setVar('ligatures', configuration.fontLigatures ? 'normal' : 'none');
     setVar('letter-spacing', configuration.letterSpacing);
     setVar('tab-size', configuration.tabSize);
@@ -107,7 +108,7 @@ export default function CodeSnap() {
           Line Numbers
         </Button>
       </Stack>
-      <Snippet />
+      <Snippet configuration={config} />
       <div id="flash-fx"></div>
       <div id="console-log"></div>
     </main >
