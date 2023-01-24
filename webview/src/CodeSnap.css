@@ -7,10 +7,6 @@ main {
   width: 100%;
 }
 
-div {
-  padding: 1rem;
-}
-
 .shutter {
   display: block;
   width: 64px;
@@ -22,4 +18,258 @@ div {
 .stack {
   width: 100%;
   min-width: 500px;
+  padding-bottom: 1rem;
+}
+
+html {
+  --ligatures: normal;
+  --font-features: initial;
+  --tab-size: 4;
+  --container-background-color: #abb8c3;
+  --box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
+  --container-padding: 3em;
+  --window-border-radius: 10px;
+  --letter-spacing: 0px;
+  --red-dot-background: #ff5f5a;
+  --yellow-dot-background: #ffbe2e;
+  --green-dot-background: #2aca44;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  font-variant-ligatures: var(--ligatures);
+  font-feature-settings: var(--font-features);
+  tab-size: var(--tab-size);
+  user-select: none;
+}
+
+#snippet-scroll {
+  max-width: 100%;
+  overflow-x: scroll;
+  margin: auto;
+}
+
+#snippet-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--container-padding);
+  background: var(--container-background);
+  width: max-content;
+  zoom: var(--preview-zoom);
+}
+
+#window {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--window-border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  resize: both;
+  width: max-content;
+  min-width: 100px;
+  padding: 18px;
+  background-color: var(--vscode-editor-background);
+}
+
+#navbar {
+  overflow: hidden;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#mac-controls {
+  display: flex;
+  float: left;
+  margin-top: 2px;
+}
+
+#mac-controls[hidden] {
+  display: none;
+}
+
+#window-controls {
+  display: flex;
+  float: right;
+  margin-top: 2px;
+}
+
+#window-controls[hidden] {
+  display: none;
+}
+
+#window-title {
+  /* width of window controls (and a bit) so they don't overlap */
+  margin: 0 80px;
+}
+
+#snippet {
+  max-width: 100%;
+  white-space: pre-wrap;
+  /*word-break: break-all;*/
+  color: var(--vscode-editor-foreground);
+  background-color: var(--vscode-editor-background);
+  font-family: var(--vscode-editor-font-family);
+  font-size: calc(var(--vscode-editor-font-size) * 1px);
+  font-weight: var(--vscode-editor-font-weight);
+  letter-spacing: calc(var(--letter-spacing) * 1px);
+}
+
+.line {
+  display: flex;
+}
+
+.line-number {
+  text-align: right;
+  color: var(--vscode-editorLineNumber-foreground);
+  margin-right: 18px;
+  width: var(--line-number-width);
+  white-space: nowrap;
+  flex: none;
+}
+
+.line-code {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.line-code > span > span {
+  display: inline-block;
+}
+
+#top-bar {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 60%);
+  display: flex;
+}
+
+button:hover {
+  background: rgba(255, 99, 99, 0.25);
+}
+
+button {
+  white-space: nowrap;
+  background: rgba(0, 99, 99, 0.15);
+  border-radius: 5px;
+  color: #ff6363;
+  outline: 0;
+  border: 0;
+  margin: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.red {
+  background-color: var(--red-dot-background);
+}
+
+.yellow {
+  background-color: var(--yellow-dot-background);
+}
+
+.green {
+  background-color: var(--green-dot-background);
+}
+
+#flash-fx {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  transition: opacity 200ms ease;
+  opacity: 1;
+}
+
+.label {
+  grid-area: label;
+  margin-left: 20px;
+  width: 0%;
+  font-size: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.label.left {
+  text-align: left;
+}
+
+.label.right {
+  text-align: right;
+}
+
+.line-highlight {
+  position: relative;
+  background-color: rgb(125 211 252 / 0.2);
+}
+
+.line-highlight::before {
+  position: absolute;
+  left: -0.75rem;
+  display: block;
+  height: 100%;
+  width: 0.25rem;
+  content: "";
+  background-color: rgb(14 165 233);
+}
+
+.line-highlight-git-add {
+  position: relative;
+  background-color: rgb(134 239 172 / 0.15);
+}
+
+.line-highlight-git-add::before {
+  position: absolute;
+  left: -0.75rem;
+  display: block;
+  height: 100%;
+  width: auto;
+  font-weight: 700;
+  color: rgb(134 239 172);
+  content: "+";
+}
+
+.line-highlight-git-remove {
+  position: relative;
+  background-color: rgb(252 165 165 / 0.15);
+}
+
+.line-highlight-git-remove::before {
+  position: absolute;
+  left: -0.75rem;
+  display: block;
+  height: 100%;
+  width: auto;
+  font-weight: 700;
+  color: rgb(239 68 68);
+  content: "-";
+}
+
+.line-number-highlight {
+  color: var(--vscode-editorLineNumber-activeForeground);
 }

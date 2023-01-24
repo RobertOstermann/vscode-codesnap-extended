@@ -96,7 +96,7 @@
           "codesnap.containerBackground": {
             "scope": "resource",
             "type": "string",
-            "default": "rgba(0, 0, 0, 0.75)",
+            "default": "rgba(0, 0, 0, 0)",
             "description": "The background of the snippet's container when the palette is custom"
           },
           "codesnap.containerPadding": {

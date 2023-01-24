@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CancellationToken,
+  Disposable,
   ExtensionContext,
   WebviewView,
   WebviewViewProvider,
   WebviewViewResolveContext,
-  window
 } from "vscode";
 
 import CodeSnap from "./codeSnap";
@@ -14,7 +14,7 @@ import CodeSnap from "./codeSnap";
 export class CodeSnapView implements WebviewViewProvider {
   public static readonly viewType = "codesnap.snapView";
 
-  private _view?: WebviewView;
+  private _disposables: Disposable[] = [];
 
   constructor(
     private readonly _extensionContext: ExtensionContext,
@@ -25,14 +25,22 @@ export class CodeSnapView implements WebviewViewProvider {
     _context: WebviewViewResolveContext,
     _token: CancellationToken,
   ) {
-    this._view = webviewView;
 
     webviewView.webview.options = {
       enableScripts: true,
     };
 
     webviewView.webview.html = CodeSnap.setupHtml(webviewView.webview, this._extensionContext);
-
+    webviewView.onDidDispose(() => this.dispose(), null, this._disposables);
     CodeSnap.setupWebviewHooks(webviewView.webview, []);
+  }
+
+  public dispose() {
+    while (this._disposables.length) {
+      const disposable = this._disposables.pop();
+      if (disposable) {
+        disposable.dispose();
+      }
+    }
   }
 }

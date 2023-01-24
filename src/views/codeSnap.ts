@@ -1,4 +1,7 @@
-import { commands, Disposable, ExtensionContext, ExtensionMode, Webview, window } from "vscode";
+import { writeFile } from "fs/promises";
+import { homedir } from "os";
+import path = require("path");
+import { commands, Disposable, ExtensionContext, ExtensionMode, Uri, Webview, window } from "vscode";
 
 import Configuration from "../helpers/configuration";
 import Utilities from "../helpers/utilities";
@@ -53,6 +56,8 @@ export default class CodeSnap {
   }
 
   public static async setupWebviewHooks(webview: Webview, disposables: Disposable[]) {
+    const editor = window.activeTextEditor;
+
     const sendConfigurationSettings = () => {
       const message = { type: "update", ...Configuration.getConfigurationSettings() };
       CodeSnap.sendMessage(webview, message);
@@ -63,22 +68,44 @@ export default class CodeSnap {
       CodeSnap.sendMessage(webview, message);
     };
 
+    let lastUsedImageUri = Uri.file(path.resolve(homedir(), "Desktop/code.png"));
+    const saveImage = async (data: any) => {
+      const uri = await window.showSaveDialog({
+        filters: {
+          Images: ["png"]
+        },
+        defaultUri: lastUsedImageUri
+      });
+
+      lastUsedImageUri = uri;
+      if (uri) writeFile(uri.fsPath, Buffer.from(data, "base64"));
+    };
+
+    const hasOneSelection = (selections: any) => selections && selections.length === 1 && !selections[0].isEmpty;
+
+    const selectionHandler = window.onDidChangeTextEditorSelection((event) => {
+      if (hasOneSelection(event.selections)) sendConfigurationSettings();
+    });
+    disposables.push(selectionHandler);
+
+    if (editor && hasOneSelection(editor.selections)) sendConfigurationSettings();
+
     webview.onDidReceiveMessage(
-      async (message: any) => {
-        const command = message.command;
-        const text = message.text;
+      async ({ type, data }: any) => {
+        const command = type;
+        const text = data;
 
         switch (command) {
-          case "hello":
-            window.showInformationMessage(text);
-            CodeSnap.sendMessage(webview, "hello");
-            break;
           case "getSettings":
             await commands.executeCommand("editor.action.clipboardCopyWithSyntaxHighlightingAction");
             sendConfigurationSettings();
             break;
           case "save":
+            await saveImage(data);
             sendFlash();
+            break;
+          default:
+            window.showInformationMessage(text);
         }
       },
       undefined,
