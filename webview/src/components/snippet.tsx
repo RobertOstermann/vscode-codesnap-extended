@@ -23,11 +23,11 @@ function toggleLineHighlight(this: any, e: any) {
   }
 };
 
-const setupLines = (node: Document | undefined, config: any) => {
+const setupLines = (node: Document | undefined, configuration: any) => {
   $$(':scope > br', node).forEach((row: any) => (row.outerHTML = '<div>&nbsp;</div>'));
 
   const rows = $$(':scope > div', node);
-  const textWidth = rows?.length + config.startLine;
+  const textWidth = rows?.length + configuration.startLine;
   setVar('line-number-width', calcTextWidth(textWidth));
 
   rows.forEach((row: any, idx: any) => {
@@ -35,13 +35,13 @@ const setupLines = (node: Document | undefined, config: any) => {
     newRow.classList.add('line');
     row.replaceWith(newRow);
 
-    if (config.showLineNumbers) {
+    if (configuration.showLineNumbers) {
       const lineNum = document.createElement('div');
       lineNum.classList.add('line-number');
-      lineNum.textContent = idx + 1 + config.startLine;
+      lineNum.textContent = idx + 1 + configuration.startLine;
       newRow.appendChild(lineNum);
 
-      lineNum.textContent = idx + 1 + config.startLine;
+      lineNum.textContent = idx + 1 + configuration.startLine;
       newRow.appendChild(lineNum);
     }
 
@@ -112,6 +112,9 @@ const trimEmptyLines = (node: Node, configuration: ConfigurationSettings) => {
 };
 
 export const pasteCode = (configuration: ConfigurationSettings, clipboard: any) => {
+  if (!configuration.realLineNumbers) {
+    configuration.startLine = 0;
+  }
   const snippetNode = $('#snippet');
   if (!snippetNode) return;
 

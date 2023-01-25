@@ -189,9 +189,6 @@
     "download-api": "vscode-dts dev",
     "postdownload-api": "vscode-dts main"
   },
-  "dependencies": {
-    "dom-to-image-even-more": "^1.0.4"
-  },
   "devDependencies": {
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.1",

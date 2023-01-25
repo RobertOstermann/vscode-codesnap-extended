@@ -2,21 +2,66 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Snippet, { pasteCode } from "./components/snippet";
 import logo from './images/icon.png';
-import Button from "@mui/material/Button";
-import { CheckBoxRounded, CheckBoxOutlineBlankRounded } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import ConfigurationSettings from "./types/configurationSettings";
 import { setVar } from "./utilities/utilities";
-import { vscode } from "./utilities/vscode";
 import { cameraFlashAnimation, takeSnap } from "./utilities/snap";
+import Setting from "./components/setting";
 
 export default function CodeSnap() {
-  const [data, setData] = useState<any>(false);
   const [config, setConfig] = useState<ConfigurationSettings>({});
-  const [lineNumbers, setLineNumbers] = useState(false);
+  const [persistConfig, setPersistConfig] = useState(false);
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('message', onMessage);
+    document.addEventListener('paste', onPaste);
+
+    return () => {
+      window.removeEventListener('message', onMessage);
+      document.removeEventListener('paste', onPaste);
+    };
+  });
+
+  useEffect(() => {
+    if (update) {
+      document.execCommand('paste');
+    }
+
+    setUpdate(false);
+  }, [update]);
+
+  const onMessage = (event: any) => {
+    const data: ConfigurationSettings = event?.data;
+    switch (data.type) {
+      case "update":
+        updateConfigurationSettings(data);
+        break;
+      case "flash":
+        cameraFlashAnimation();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onPaste = (event: ClipboardEvent) => {
+    pasteCode({ ...config }, event.clipboardData);
+  };
 
   const updateConfigurationSettings = (configuration: ConfigurationSettings) => {
-    setConfig(configuration);
+    if (!persistConfig) {
+      setConfig(configuration);
+    } else {
+      // startLine needs to be updated
+      setConfig((prevConfig) => ({ ...prevConfig, startLine: configuration.startLine }));
+    }
+
+    updateVariables(configuration);
+    setUpdate(true);
+  };
+
+  const updateVariables = (configuration: ConfigurationSettings) => {
     setVar('ligatures', configuration.fontLigatures ? 'normal' : 'none');
     setVar('letter-spacing', configuration.letterSpacing);
     setVar('tab-size', configuration.tabSize);
@@ -39,51 +84,17 @@ export default function CodeSnap() {
       setVar('yellow-dot-background', "#ffbe2e");
       setVar('green-dot-background', "#2aca44");
     }
-
-    document.addEventListener('paste', (event) => {
-      pasteCode(configuration, event.clipboardData);
-    });
-
-    document.execCommand('paste');
   };
 
-  const onMessage = (event: any) => {
-    const data: ConfigurationSettings = event?.data;
-    switch (data.type) {
-      case "update":
-        updateConfigurationSettings(data);
-        break;
-      case "flash":
-        cameraFlashAnimation();
-        break;
-      default:
-        break;
-    }
-    setData(true);
-  };
-
-  useEffect(() => {
-    window.addEventListener('message', onMessage);
-
-    return () => {
-      window.removeEventListener('message', onMessage);
-    };
-  });
-
-  const shutterAction = () => {
-    takeSnap(config);
-  };
-
-  const postMessage = () => {
-    vscode.postMessage({
-      type: "getSettings",
-      data: "Retrieving Settings",
-    });
+  const updateSetting = (configuration: ConfigurationSettings) => {
+    setPersistConfig(true);
+    setConfig(configuration);
+    updateConfigurationSettings(configuration);
   };
 
   return (
     <main>
-      <img src={logo} alt="snap" className="shutter" onClick={shutterAction} />
+      <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} />
       <Stack
         direction="row"
         justifyContent="center"
@@ -91,24 +102,21 @@ export default function CodeSnap() {
         spacing={3}
         className="stack"
       >
-        <Button
-          className="settingButton"
-          variant="contained"
-          color="primary"
-          onClick={() => setConfig((prevConfig) => ({ ...config, showWindowTitle: !prevConfig.showWindowTitle }))}
-          startIcon={config.showWindowTitle ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        <Setting
+          checked={config.showWindowTitle ?? false}
+          disabled={Object.keys(config).length === 0}
+          update={() => updateSetting({ ...config, showWindowTitle: !config.showWindowTitle })}
         >
           Window Title
-        </Button>
-        <Button
-          className="settingButton"
-          variant="contained"
-          color="primary"
-          onClick={postMessage}
-          startIcon={lineNumbers ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        </Setting>
+        <Setting
+          checked={config.realLineNumbers}
+          disabled={Object.keys(config).length === 0}
+          update={() => updateSetting({ ...config, realLineNumbers: !config.realLineNumbers })}
         >
-          Line Numbers
-        </Button>
+          {/* Need snippet.tsx to update on configuration change */}
+          Real Line Numbers
+        </Setting>
       </Stack>
       <Stack
         direction="row"
@@ -117,26 +125,24 @@ export default function CodeSnap() {
         spacing={3}
         className="stack"
       >
-        <Button
-          className="settingButton"
-          variant="contained"
-          color="primary"
-          onClick={() => setLineNumbers(!lineNumbers)}
-          startIcon={data ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        <Setting
+          checked={config.showLineNumbers}
+          disabled={Object.keys(config).length === 0}
+          update={() => updateSetting({ ...config, showLineNumbers: !config.showLineNumbers })}
         >
-          Line Numbers
-        </Button>
-        <Button
-          className="settingButton"
-          variant="contained"
-          color="primary"
-          onClick={postMessage}
-          startIcon={lineNumbers ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+          {/* Need snippet.tsx to update on configuration change */}
+          Show Line Numbers
+        </Setting>
+        <Setting
+          checked={config.transparentBackground}
+          disabled={Object.keys(config).length === 0}
+          update={() => updateSetting({ ...config, transparentBackground: !config.transparentBackground })}
         >
-          Line Numbers
-        </Button>
+          {/* Need snippet.tsx to update on configuration change */}
+          Transparent Background
+        </Setting>
       </Stack>
-      <Snippet configuration={config} />
+      <Snippet configuration={{ ...config }} />
       <div id="flash-fx"></div>
       <div id="console-log"></div>
     </main >

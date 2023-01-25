@@ -183,7 +183,7 @@ export default class Configuration {
     const editor = vscode.window.activeTextEditor;
 
     const selection = editor && editor.selection;
-    const startLine = Configuration.realLineNumbers() ? (selection ? selection.start.line : 0) : 0;
+    const startLine = selection ? selection.start.line : 0;
 
     let windowTitle = "";
     if (editor && Configuration.getExtensionSettings().showWindowTitle) {

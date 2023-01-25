@@ -16,8 +16,10 @@ main {
   padding: 1rem;
 }
 
-.settingButton {
-  width: 15rem;
+div > .settingButton {
+  line-height: inherit;
+  justify-content: flex-start;
+  width: 20rem;
 }
 
 .stack {
