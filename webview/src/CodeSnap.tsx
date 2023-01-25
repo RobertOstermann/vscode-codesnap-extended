@@ -65,11 +65,6 @@ export default function CodeSnap() {
   useEffect(() => {
     window.addEventListener('message', onMessage);
 
-    // vscode.postMessage({
-    //   type: "getSettings",
-    //   data: "Retrieve Configuration Settings",
-    // });
-
     return () => {
       window.removeEventListener('message', onMessage);
     };
@@ -88,6 +83,7 @@ export default function CodeSnap() {
 
   return (
     <main>
+      <img src={logo} alt="snap" className="shutter" onClick={shutterAction} />
       <Stack
         direction="row"
         justifyContent="center"
@@ -96,6 +92,33 @@ export default function CodeSnap() {
         className="stack"
       >
         <Button
+          className="settingButton"
+          variant="contained"
+          color="primary"
+          onClick={() => setConfig((prevConfig) => ({ ...config, showWindowTitle: !prevConfig.showWindowTitle }))}
+          startIcon={config.showWindowTitle ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        >
+          Window Title
+        </Button>
+        <Button
+          className="settingButton"
+          variant="contained"
+          color="primary"
+          onClick={postMessage}
+          startIcon={lineNumbers ? <CheckBoxRounded /> : <CheckBoxOutlineBlankRounded />}
+        >
+          Line Numbers
+        </Button>
+      </Stack>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={3}
+        className="stack"
+      >
+        <Button
+          className="settingButton"
           variant="contained"
           color="primary"
           onClick={() => setLineNumbers(!lineNumbers)}
@@ -103,8 +126,8 @@ export default function CodeSnap() {
         >
           Line Numbers
         </Button>
-        <img src={logo} alt="snap" className="shutter" onClick={shutterAction} />
         <Button
+          className="settingButton"
           variant="contained"
           color="primary"
           onClick={postMessage}

@@ -13,6 +13,11 @@ main {
   height: 64px;
   margin: auto;
   cursor: pointer;
+  padding: 1rem;
+}
+
+.settingButton {
+  width: 15rem;
 }
 
 .stack {
