@@ -15,8 +15,8 @@ export const setVar = (key: string, value: string | number | undefined, node = d
   }
 };
 
-export const getVar = (key: string, node = document.body) => {
-  node.style.getPropertyValue('--' + key);
+export const getVar = (key: string, node = document.body): string => {
+  return node.style.getPropertyValue('--' + key);
 };
 
 export const calcTextWidth = (text: any) => {

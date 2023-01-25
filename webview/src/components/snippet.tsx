@@ -138,31 +138,33 @@ export default function Snippet({ configuration }: SnippetProps) {
   return (
     <div id="snippet-scroll">
       <div id="snippet-container">
-        <div id="window">
-          <div id="navbar" hidden={hideNavbar}>
-            <div id="window-controls" hidden={hideWindowControls}>
-              <svg width="58" height="14" viewBox="0 0 58 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 7H11" stroke="#878787" strokeLinecap="round" strokeLinejoin="round"></path>
-                <path
-                  d="M35 1H25C24.4477 1 24 1.44772 24 2V12C24 12.5523 24.4477 13 25 13H35C35.5523 13 36 12.5523 36 12V2C36 1.44772 35.5523 1 35 1Z"
-                  stroke="#878787" />
-                <path d="M47 2L57 12" stroke="#878787" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M47 12L57 2" stroke="#878787" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+        <div id="snippet-window">
+          <div id="window">
+            <div id="navbar" hidden={hideNavbar}>
+              <div id="window-controls" hidden={hideWindowControls}>
+                <svg width="58" height="14" viewBox="0 0 58 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7H11" stroke="#878787" strokeLinecap="round" strokeLinejoin="round"></path>
+                  <path
+                    d="M35 1H25C24.4477 1 24 1.44772 24 2V12C24 12.5523 24.4477 13 25 13H35C35.5523 13 36 12.5523 36 12V2C36 1.44772 35.5523 1 35 1Z"
+                    stroke="#878787" />
+                  <path d="M47 2L57 12" stroke="#878787" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M47 12L57 2" stroke="#878787" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+
+              <div id="mac-controls" hidden={hideMacControls}>
+                <div id="red-dot" className="red dot" />
+                <div id="red-dot" className="yellow dot" />
+                <div id="red-dot" className="green dot" />
+              </div>
+
+              <div id="window-title" hidden={hideWindowTitle}>
+                {configuration.windowTitle}
+              </div>
             </div>
 
-            <div id="mac-controls" hidden={hideMacControls}>
-              <div id="red-dot" className="red dot" />
-              <div id="red-dot" className="yellow dot" />
-              <div id="red-dot" className="green dot" />
-            </div>
-
-            <div id="window-title" hidden={hideWindowTitle}>
-              {configuration.windowTitle}
-            </div>
+            <div id="snippet" />
           </div>
-
-          <div id="snippet" />
         </div>
       </div>
     </div >

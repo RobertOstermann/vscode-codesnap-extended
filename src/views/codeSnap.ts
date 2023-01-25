@@ -70,7 +70,6 @@ export default class CodeSnap {
       CodeSnap.sendMessage(webview, message);
     }, DEBOUNCE_TIME);
 
-
     const sendFlash = () => {
       const message = { type: "flash" };
       CodeSnap.sendMessage(webview, message);

@@ -1,22 +1,16 @@
 import ConfigurationSettings from "../types/configurationSettings";
 import {
   $,
-  $$,
   redraw,
   once,
   setVar,
+  getVar,
 } from './utilities';
 import domtoimage from "dom-to-image-more";
 import { vscode } from "../utilities/vscode";
 
-const windowNode = $('#window');
-const snippetContainerNode = $('#snippet-container');
-
-const flashFx = $('#flash-fx');
-
-const SNAP_SCALE = 2;
-
 export const cameraFlashAnimation = async () => {
+  const flashFx = $('#flash-fx');
   flashFx.style.display = 'block';
   redraw(flashFx);
   flashFx.style.opacity = '0';
@@ -26,19 +20,20 @@ export const cameraFlashAnimation = async () => {
 };
 
 export const takeSnap = async (config: ConfigurationSettings) => {
-  windowNode.style.resize = 'none';
+  const snippetWindowNode = $('#snippet-window');
+  const snippetContainerNode = $('#snippet-container');
+
+  cameraFlashAnimation();
+  if (snippetWindowNode) snippetWindowNode.style.resize = 'none';
   if (config.transparentBackground || config.target === 'window') {
     setVar('container-background', 'transparent');
   }
 
-  // let currentZoom = getVar('preview-zoom');
+  let currentZoom = getVar('preview-zoom');
   setVar('preview-zoom', 1.0);
-  const target = config.target === 'container' ? snippetContainerNode : windowNode;
-  const options: DomToImage.Options = {
+  const target = config.target === 'container' ? snippetContainerNode : snippetWindowNode;
+  const options: any = {
     bgcolor: 'transparent',
-    width: target.clientWidth * SNAP_SCALE,
-    height: target.clientHeight * SNAP_SCALE,
-    style: {},
     // postProcess: (node: any) => {
     //   $$('#snippet-container, #snippet, .line, .line-code span', node).forEach(
     //     (span: any) => (span.style.width = 'unset')
@@ -47,7 +42,13 @@ export const takeSnap = async (config: ConfigurationSettings) => {
     // }
   };
 
+  // The initial domtoimage.toPng does not capture correctly.
+  await domtoimage.toPng(target, options);
   const url = await domtoimage.toPng(target, options);
+
+  if (snippetWindowNode) snippetWindowNode.style.resize = 'horizontal';
+  setVar('container-background', config.containerBackground);
+  setVar('preview-zoom', currentZoom);
 
   const data = url.slice(url.indexOf(',') + 1);
   if (config.shutterAction === 'copy') {
@@ -60,15 +61,10 @@ export const takeSnap = async (config: ConfigurationSettings) => {
     navigator.clipboard.write([new ClipboardItem({
       'image/png': blob
     })]);
-    cameraFlashAnimation();
   } else {
     vscode.postMessage({
       type: config.shutterAction,
       data
     });
   }
-
-  windowNode.style.resize = 'horizontal';
-  setVar('container-background', config.containerBackground);
-  // setVar('preview-zoom', currentZoom);
 };
