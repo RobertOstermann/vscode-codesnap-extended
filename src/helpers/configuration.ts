@@ -28,6 +28,12 @@ export default class Configuration {
 
   /** Extension Settings  */
 
+  public static advancedSettings(): boolean {
+    return vscode.workspace
+      .getConfiguration("codesnap")
+      .get<boolean>("advancedSettings", false);
+  }
+
   public static backgroundPalette(): string {
     return vscode.workspace
       .getConfiguration("codesnap")
@@ -208,6 +214,7 @@ export default class Configuration {
 
   public static getExtensionSettings(): ExtensionSettings {
     return {
+      "advancedSettings": Configuration.advancedSettings(),
       "backgroundPalette": Configuration.backgroundPalette(),
       "boxShadow": Configuration.boxShadow(),
       "containerBackground": Configuration.containerBackground(),

@@ -65,6 +65,12 @@
       {
         "title": "CodeSnap",
         "properties": {
+          "codesnap.advancedSettings": {
+            "scope": "resource",
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Show setting buttons on the webview on startup"
+          },
           "codesnap.backgroundPalette": {
             "scope": "resource",
             "type": "string",

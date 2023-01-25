@@ -3,14 +3,13 @@ import Button from "@mui/material/Button";
 import { CheckBoxRounded, CheckBoxOutlineBlankRounded } from "@mui/icons-material";
 import { PropsWithChildren } from "react";
 
-type SettingProps = {
+type SettingButtonProps = {
   checked?: boolean;
   disabled?: boolean;
   update: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
-function Setting(props: PropsWithChildren<SettingProps>) {
-
+function SettingButton(props: PropsWithChildren<SettingButtonProps>) {
   return (
     <Button
       className="settingButton"
@@ -24,9 +23,9 @@ function Setting(props: PropsWithChildren<SettingProps>) {
   );
 }
 
-Setting.defaultProps = {
+SettingButton.defaultProps = {
   checked: false,
   disabled: true,
 };
 
-export default Setting;
+export default SettingButton;

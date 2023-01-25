@@ -2,11 +2,12 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Snippet, { pasteCode } from "./components/snippet";
 import logo from './images/icon.png';
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import ConfigurationSettings from "./types/configurationSettings";
 import { setVar } from "./utilities/utilities";
 import { cameraFlashAnimation, takeSnap } from "./utilities/snap";
-import Setting from "./components/setting";
+import SettingContainer from "./components/settingContainer";
+import { SettingsOutlined, Settings } from "@mui/icons-material";
 
 export default function CodeSnap() {
   const [config, setConfig] = useState<ConfigurationSettings>({});
@@ -102,46 +103,22 @@ export default function CodeSnap() {
         spacing={3}
         className="stack"
       >
-        <Setting
-          checked={config.showWindowTitle ?? false}
-          disabled={Object.keys(config).length === 0}
-          update={() => updateSetting({ ...config, showWindowTitle: !config.showWindowTitle })}
+        <Button
+          className="settingButton"
+          variant="contained"
+          color="primary"
+          onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}
+          startIcon={config.advancedSettings ? <Settings /> : <SettingsOutlined />}
         >
-          Window Title
-        </Setting>
-        <Setting
-          checked={config.realLineNumbers}
-          disabled={Object.keys(config).length === 0}
-          update={() => updateSetting({ ...config, realLineNumbers: !config.realLineNumbers })}
-        >
-          {/* Need snippet.tsx to update on configuration change */}
-          Real Line Numbers
-        </Setting>
+          Advanced Settings
+        </Button>
       </Stack>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={3}
-        className="stack"
-      >
-        <Setting
-          checked={config.showLineNumbers}
-          disabled={Object.keys(config).length === 0}
-          update={() => updateSetting({ ...config, showLineNumbers: !config.showLineNumbers })}
-        >
-          {/* Need snippet.tsx to update on configuration change */}
-          Show Line Numbers
-        </Setting>
-        <Setting
-          checked={config.transparentBackground}
-          disabled={Object.keys(config).length === 0}
-          update={() => updateSetting({ ...config, transparentBackground: !config.transparentBackground })}
-        >
-          {/* Need snippet.tsx to update on configuration change */}
-          Transparent Background
-        </Setting>
-      </Stack>
+      {config.advancedSettings &&
+        <SettingContainer
+          config={{ ...config }}
+          update={updateSetting}
+        />
+      }
       <Snippet configuration={{ ...config }} />
       <div id="flash-fx"></div>
       <div id="console-log"></div>

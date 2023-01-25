@@ -1,4 +1,5 @@
 type ExtensionSettings = {
+  advancedSettings?: boolean;
   backgroundPalette?: string;
   boxShadow?: string;
   containerBackground?: string;

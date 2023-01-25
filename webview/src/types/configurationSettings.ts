@@ -5,6 +5,7 @@ type ConfigurationSettings = {
   startLine?: number;
   tabSize?: string | number;
   // Extension Settings
+  advancedSettings?: boolean;
   backgroundPalette?: string;
   boxShadow?: string;
   containerBackground?: string;
