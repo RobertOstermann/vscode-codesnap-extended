@@ -3,8 +3,24 @@ node_modules
 .vscode-test/**
 out/test/**
 src/**
-.gitignore
 **/tsconfig.json
 **/tslint.json
 **/*.map
 **/*.ts
+.editorconfig
+.eslintignore
+.eslintrc
+.gitattributes
+.gitignore
+
+# Ignore all webview files except the build directory
+webview/node_modules/**
+webview/public/**
+webview/src/**
+webview/.env
+webview/.gitignore
+webview/config-overrides.js
+webview/package-lock.json
+webview/package.json
+webview/README.md
+webview/tsconfig.json

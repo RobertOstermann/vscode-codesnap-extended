@@ -1,6 +1,6 @@
 module.exports = function override(config, env) {
   // Define our own filename
-  config.output.filename = "js/codesnap.js";
+  config.output.filename = "static/js/codesnap.js";
 
   // This way we only need to load one file for the webview
   config.optimization.splitChunks = {
@@ -16,7 +16,7 @@ module.exports = function override(config, env) {
   // Specifies the CSS file to output
   config.plugins = config.plugins.map((plugin) => {
     if (plugin.constructor.name === "MiniCssExtractPlugin") {
-      plugin.options.filename = `css/codesnap.css`;
+      plugin.options.filename = `static/css/codesnap.css`;
     }
     return plugin;
   });

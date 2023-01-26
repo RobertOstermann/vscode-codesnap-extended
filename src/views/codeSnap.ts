@@ -19,15 +19,16 @@ export default class CodeSnap {
     const nonce = Utilities.getNonce();
     const contentSecurityPolicy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">`;
     const localServerUrl = "http://localhost:3000";
+    const cssPath = ["webview", "build", "static", "css"];
+    const jsPath = ["webview", "build", "static", "js"];
     const cssFile = "codesnap.css";
     const jsFile = "codesnap.js";
-    const cssPath = ["webview", "build", "css"];
-    const jsPath = ["webview", "build", "js"];
 
     let stylesUri = null;
     let scriptUri = null;
 
-    const isProduction = context.extensionMode === ExtensionMode.Production;
+    // const isProduction = context.extensionMode === ExtensionMode.Production;
+    const isProduction = true;
     if (isProduction) {
       stylesUri = Utilities.getUri(webview, context.extensionUri, [...cssPath, cssFile]);
       scriptUri = Utilities.getUri(webview, context.extensionUri, [...jsPath, jsFile]);
