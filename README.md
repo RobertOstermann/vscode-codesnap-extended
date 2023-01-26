@@ -86,7 +86,6 @@ Monokai + [Fira Code](https://github.com/tonsky/FiraCode)
 - [Polacode](https://github.com/octref/polacode) for the initial concept.
 - [Carbon](https://carbon.now.sh) for design inspiration.
 - [kufii/Codesnap](https://github.com/kufii/CodeSnap)
-- [huibizhang/CodeSnap-plus](https://github.com/kufii/CodeSnap)
 - [luisllamasbinaburo/VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)
 - [VSCode's Extension Samples](https://github.com/microsoft/vscode-extension-samples/tree/master/decorator-sample), which was a huge help to get started
 - [All Contributors](../../contributors)
