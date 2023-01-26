@@ -101,7 +101,15 @@ export default function CodeSnap() {
         spacing={3}
         className="stack"
       >
-        <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} />
+        {/* <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} /> */}
+        <Button
+          className="settingButton advancedSettings"
+          variant="contained"
+          color="primary"
+          onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}
+        >
+          {config.shutterAction === undefined ? "shutter action" : config.shutterAction}
+        </Button>
       </Stack>
       <Stack
         justifyContent="center"
