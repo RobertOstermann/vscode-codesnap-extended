@@ -4,12 +4,6 @@
   <img src="https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/icon.png" alt="CodeSnap">
 </p>
 
-<p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=RobertOstermann.vscode-codesnap-extended"><img src="https://vsmarketplacebadge.apphb.com/version-short/RobertOstermann.vscode-codesnap-extended.svg" alt="VS Marketplace Version"></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=RobertOstermann.vscode-codesnap-extended"><img src="https://vsmarketplacebadge.apphb.com/installs-short/RobertOstermann.vscode-codesnap-extended.svg" alt="VS Marketplace Installs"></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=RobertOstermann.vscode-codesnap-extended"><img src="https://vsmarketplacebadge.apphb.com/rating-short/RobertOstermann.vscode-codesnap-extended.svg" alt="VS Marketplace Rating"></a>
-</p>
-
 # CodeSnap-Extended
 
 📸 Take beautiful screenshots of your code in VS Code!
