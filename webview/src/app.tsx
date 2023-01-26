@@ -99,11 +99,11 @@ export default function CodeSnap() {
         justifyContent="center"
         alignItems="center"
         spacing={3}
-        className="stack"
+        className="stack shutterAction"
       >
         {/* <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} /> */}
         <Button
-          className="settingButton advancedSettings"
+          className="settingButton justifyCenter"
           variant="contained"
           color="primary"
           onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}
@@ -118,7 +118,7 @@ export default function CodeSnap() {
         className="stack"
       >
         <Button
-          className="settingButton advancedSettings"
+          className="settingButton justifyCenter"
           variant="contained"
           color="primary"
           onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}

@@ -27,7 +27,7 @@ div > .settingButton {
   width: 17rem;
 }
 
-div > .settingButton.advancedSettings {
+div > .settingButton.justifyCenter {
   justify-content: center;
 }
 
@@ -35,6 +35,10 @@ div > .settingButton.advancedSettings {
   width: 100%;
   min-width: 500px;
   padding-bottom: 1rem;
+}
+
+.stack.shutterAction {
+  padding-top: 2rem;
 }
 
 .stack.slider {

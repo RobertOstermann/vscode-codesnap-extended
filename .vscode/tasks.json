@@ -42,6 +42,62 @@
       "options": {
         "cwd": "C:/Users/RobertOstermann/source/repos/extensions/vscode-codesnap-extended/webview"
       }
+    },
+    {
+      "label": "npm build: webview",
+      "type": "shell",
+      "command": "npm run build",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true,
+        "close": true
+      },
+      "options": {
+        "cwd": "C:/Users/RobertOstermann/source/repos/extensions/vscode-codesnap-extended/webview"
+      }
+    },
+    {
+      "label": "vsce package",
+      "type": "shell",
+      "command": "vsce package",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true,
+        "close": true
+      },
+      "options": {
+        "cwd": "C:/Users/RobertOstermann/source/repos/extensions/vscode-codesnap-extended"
+      }
+    },
+    {
+      "label": "vsce publish",
+      "type": "shell",
+      "command": "vsce publish",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "options": {
+        "cwd": "C:/Users/RobertOstermann/source/repos/extensions/vscode-codesnap-extended"
+      }
     }
   ]
 }
