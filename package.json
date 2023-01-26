@@ -106,6 +106,12 @@
             "default": "2rem",
             "description": "The padding for the snippet's container"
           },
+          "codesnap.previewZoom": {
+            "scope": "resource",
+            "type": "number",
+            "default": 1,
+            "description": "The zoom for the snippet's container"
+          },
           "codesnap.realLineNumbers": {
             "scope": "resource",
             "type": "boolean",

@@ -87,6 +87,12 @@ export default class Configuration {
       .get<string>("containerPadding", "3em");
   }
 
+  public static previewZoom(): number {
+    return vscode.workspace
+      .getConfiguration("codesnap")
+      .get<number>("previewZoom", 1);
+  }
+
   public static realLineNumbers(): boolean {
     return vscode.workspace
       .getConfiguration("codesnap")

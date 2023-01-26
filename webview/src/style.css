@@ -1,3 +1,8 @@
+#root {
+  height: 100vh;
+  width: 100%;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -19,13 +24,22 @@ main {
 div > .settingButton {
   line-height: inherit;
   justify-content: flex-start;
-  width: 20rem;
+  width: 17rem;
+}
+
+div > .settingButton.advancedSettings {
+  justify-content: center;
 }
 
 .stack {
   width: 100%;
   min-width: 500px;
   padding-bottom: 1rem;
+}
+
+.stack.slider {
+  width: 50%;
+  margin: 0 auto;
 }
 
 html {
@@ -55,8 +69,8 @@ body {
 
 #snippet-scroll {
   max-width: 100%;
-  overflow-x: scroll;
-  margin: auto;
+  overflow: scroll;
+  margin: 0 auto;
 }
 
 #snippet-container {
@@ -157,25 +171,6 @@ body {
   padding: 8px;
   box-shadow: 0 4px 16px 0 rgb(0 0 0 / 60%);
   display: flex;
-}
-
-button:hover {
-  background: rgba(255, 99, 99, 0.25);
-}
-
-button {
-  white-space: nowrap;
-  background: rgba(0, 99, 99, 0.15);
-  border-radius: 5px;
-  color: #ff6363;
-  outline: 0;
-  border: 0;
-  margin: 5px;
-  padding: 10px 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
 }
 
 .dot {
@@ -279,4 +274,8 @@ button {
 
 .line-number-highlight {
   color: var(--vscode-editorLineNumber-activeForeground);
+}
+
+#console-log {
+  margin: auto;
 }

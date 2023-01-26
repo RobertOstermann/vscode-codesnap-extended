@@ -2,7 +2,7 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Snippet, { pasteCode } from "./components/snippet";
 import logo from './images/icon.png';
-import { Button, Stack } from "@mui/material";
+import { Button, Slider, Stack } from "@mui/material";
 import ConfigurationSettings from "./types/configurationSettings";
 import { setVar } from "./utilities/utilities";
 import { cameraFlashAnimation, takeSnap } from "./utilities/snap";
@@ -70,7 +70,7 @@ export default function CodeSnap() {
     setVar('box-shadow', configuration.boxShadow);
     setVar('container-padding', configuration.containerPadding);
     setVar('window-border-radius', configuration.windowBorderRadius);
-    setVar('preview-zoom', "0.75");
+    setVar('preview-zoom', configuration.previewZoom);
 
     if (typeof configuration.fontLigatures === 'string') {
       setVar('font-features', configuration.fontLigatures);
@@ -95,16 +95,22 @@ export default function CodeSnap() {
 
   return (
     <main>
-      <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} />
       <Stack
-        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={3}
+        className="stack"
+      >
+        <img src={logo} alt="snap" className="shutter" onClick={() => takeSnap({ ...config })} />
+      </Stack>
+      <Stack
         justifyContent="center"
         alignItems="center"
         spacing={3}
         className="stack"
       >
         <Button
-          className="settingButton"
+          className="settingButton advancedSettings"
           variant="contained"
           color="primary"
           onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}
@@ -119,6 +125,21 @@ export default function CodeSnap() {
           update={updateSetting}
         />
       }
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        spacing={3}
+        className="stack slider"
+      >
+        <Slider
+          defaultValue={1}
+          onChange={(event, value: any) => updateSetting({ ...config, previewZoom: value })}
+          min={0.5}
+          max={1.5}
+          step={0.1}
+          valueLabelDisplay="auto"
+        />
+      </Stack>
       <Snippet configuration={{ ...config }} />
       <div id="flash-fx"></div>
       <div id="console-log"></div>

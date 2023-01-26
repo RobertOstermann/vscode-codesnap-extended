@@ -10,6 +10,7 @@ type ConfigurationSettings = {
   boxShadow?: string;
   containerBackground?: string;
   containerPadding?: string;
+  previewZoom?: number;
   realLineNumbers?: boolean;
   showLineNumbers?: boolean;
   showWindowTitle?: boolean;
