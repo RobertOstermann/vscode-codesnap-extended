@@ -1,10 +1,8 @@
-# Inline Parameters Extended for VSCode
+# CodeSnap-Extended
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/icon.png" alt="CodeSnap">
 </p>
-
-# CodeSnap-Extended
 
 📸 Take beautiful screenshots of your code in VS Code!
 And you can hightlight the line just by click the line number.

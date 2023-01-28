@@ -54,7 +54,6 @@ export default function CodeSnap() {
     if (!persistConfig) {
       setConfig(configuration);
     } else {
-      // startLine needs to be updated
       setConfig((prevConfig) => ({ ...prevConfig, startLine: configuration.startLine }));
     }
 
@@ -106,7 +105,7 @@ export default function CodeSnap() {
           className="settingButton justifyCenter"
           variant="contained"
           color="primary"
-          onClick={() => setConfig((prevConfig) => ({ ...prevConfig, advancedSettings: !prevConfig.advancedSettings }))}
+          onClick={() => takeSnap({ ...config })}
         >
           {config.shutterAction === undefined ? "shutter action" : config.shutterAction}
         </Button>

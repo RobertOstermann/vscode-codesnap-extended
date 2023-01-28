@@ -18,13 +18,14 @@ export default class CodeSnap {
   public static setupHtml(webview: Webview, context: ExtensionContext) {
     const nonce = Utilities.getNonce();
     // const contentSecurityPolicy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">`;
-    const contentSecurityPolicy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">`;
+    // const contentSecurityPolicy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">`;
     const localServerUrl = "http://localhost:3000";
     const cssPath = ["webview", "build", "static", "css"];
     const jsPath = ["webview", "build", "static", "js"];
     const cssFile = "codesnap.css";
     const jsFile = "codesnap.js";
 
+    const baseUri = Utilities.getUri(webview, context.extensionUri, ["webview", "build"]);
     let stylesUri = null;
     let scriptUri = null;
 
@@ -32,7 +33,9 @@ export default class CodeSnap {
     const isProduction = true;
     if (isProduction) {
       stylesUri = Utilities.getUri(webview, context.extensionUri, [...cssPath, cssFile]);
+      // stylesUri = stylesUri.with({ scheme: "vscode-resource" });
       scriptUri = Utilities.getUri(webview, context.extensionUri, [...jsPath, jsFile]);
+      // scriptUri = scriptUri.with({ scheme: "vscode-resource" });
     } else {
       scriptUri = `${localServerUrl}/js/${jsFile}`;
     }
@@ -45,15 +48,14 @@ export default class CodeSnap {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
           <meta name="theme-color" content="#000000">
-          ${isProduction ? contentSecurityPolicy : ""}
           ${isProduction ? `<link rel="stylesheet" type="text/css" href="${stylesUri}">` : ""}
-          <base href="${Uri.file(path.join(context.extensionPath, "webview/build")).with({ scheme: "vscode-resource" })}/">
+          ${isProduction ? `<base href="${baseUri}">` : ""}
           <title>CodeSnap</title>
         </head>
         <body>
           <noscript>You need to enable JavaScript to run this app.</noscript>
           <div id="root"></div>
-          <script nonce="${nonce}" src="${scriptUri}"></script>
+          <script ${isProduction ? `nonce="${nonce}"` : ""} src="${scriptUri}"></script>
         </body>
       </html>
     `;
