@@ -5,19 +5,19 @@
 </p>
 
 📸 Take beautiful screenshots of your code in VS Code!
-And you can hightlight the line just by click the line number.
+And you can highlight the line just by click the line number.
 
 ![UI](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/ui.png)
 
 ## Features
 
-- Can hightlight the line if you click line number
-- hightlight have 3 styles:
+- Can highlight the line if you click line number
+- highlight have 3 styles:
   - focus
   - git-add
   - git-remove
 
-(For usage, can see the **Hightlight Usage Instructions**)
+(For usage, can see the **Highlight Usage Instructions**)
 
 - **Original features of CodeSnap**
   - Quickly save screenshots of your code
@@ -38,28 +38,28 @@ And you can hightlight the line just by click the line number.
 - If you'd like to bind CodeSnap to a hotkey, open up your keyboard shortcut settings and bind `codesnap.start` to a custom keybinding.
 - If you'd like to copy to clipboard instead of saving, click the image and press the copy keyboard shortcut (defaults are Ctrl+C on Windows and Linux, Cmd+C on OS X), or bind `codesnap.shutterAction` to `copy` in your settings
 
-## Hightlight Usage Instructions
+## Highlight Usage Instructions
 
-If you want to hightlight the line just click the line number, and the line will be hightlighted.
+If you want to highlight the line just click the line number, and the line will be highlighted.
 
 - Click once: Style **focus**
 - Click twice: Style **git-add**
 - Click thrice: Style **git-remove**
-- Click four times: No hightlight
+- Click four times: No highlight
 
 ## Examples
 
-Hightlight Style: **Focus**
+Highlight Style: **Focus**
 
-![Hightlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/hightlight-focus.png)
+![Highlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/highlight-focus.png)
 
-Hightlight Style: **Git-Add**
+Highlight Style: **Git-Add**
 
-![Hightlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/hightlight-add.png)
+![Highlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/highlight-add.png)
 
-Hightlight Style: **Git-Remove**
+Highlight Style: **Git-Remove**
 
-![Hightlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/hightlight-remove.png)
+![Highlight-Style:Focus](https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/highlight-remove.png)
 
 [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) + [Operator Mono](https://www.typography.com/fonts/operator/styles/operatormono)
 
