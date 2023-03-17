@@ -1,7 +1,7 @@
 # CodeSnap-Extended
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/icon.png" alt="CodeSnap">
+  <img src="https://raw.githubusercontent.com/RobertOstermann/vscode-codesnap-extended/master/images/logo/icon.png" alt="CodeSnap">
 </p>
 
 📸 Take beautiful screenshots of your code in VS Code!

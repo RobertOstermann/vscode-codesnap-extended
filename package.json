@@ -4,7 +4,7 @@
   "description": "📸 Take beautiful screenshots of your code.",
   "publisher": "RobertOstermann",
   "icon": "images/logo/icon.png",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "homepage": "https://github.com/RobertOstermann/vscode-codesnap-extended",
   "bugs": {
